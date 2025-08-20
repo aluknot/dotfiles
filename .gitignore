@@ -1,0 +1,22 @@
+# ===== Archivos del sistema =====
+.DS_Store
+Thumbs.db
+
+# ===== Archivos temporales de editores =====
+*.swp
+*.swo
+*.tmp
+*.bak
+
+# ===== Archivos de chezmoi que no quiero en el repo =====
+# Ejemplo: backups o archivos locales que genera chezmoi
+private_*
+
+# ===== Secretos =====
+secrets/
+*.key
+*.pem
+*.env
+*.gpg
+
+test.sh

@@ -1,0 +1,265 @@
+"$schema" = 'https://starship.rs/config-schema.json'
+
+# Opciones generales
+
+# Inserts a blank line between shell prompts
+add_newline = false
+   
+format = """
+Lau in ${custom.folder_icon}$python$directory${custom.venv_indicator}$git_branch$git_status$character
+"""
+
+# format = """
+#[    ](fg:#58A6FF)\
+#[](fg:#769ff0)\
+#[    ](fg:#58A6FF)\
+#[](fg:#769ff0)\
+#$directory\
+#$git_branch\
+#$git_status\
+#$time\
+#(fg:#3465a4)\
+#\n$character"""
+
+# line_break.disabled = false
+
+command_timeout = 1000
+
+[jobs]
+# No queremos que se muestre el símbolo numérico (ej: ⑴)
+symbol = ""
+# Esta es la configuración clave:
+# Le decimos a Starship que solo muestre el indicador de job
+# si el comando tarda más de 1000 segundos (un número imposiblemente alto).
+# Esto efectivamente lo deshabilita para nuestro caso de uso.
+threshold = 1000
+
+[character]
+success_symbol = '[≫](grey bold)' # ⪼ ❯ ≫
+error_symbol = '[≫](grey bold)'
+
+[line_break]
+disabled = false
+
+[custom.folder_icon]
+description = "Muestra un ícono de carpeta genérico"
+# La condición es la clave: Muéstrate solo si NO es un proyecto de Python.
+# Usamos las mismas condiciones que el módulo [python] pero negadas.
+when = 'test ! -d .venv && test ! -f pyproject.toml && test ! -f requirements.txt && test ! -f Pipfile && test ! -f tox.ini'
+# El comando simplemente imprime el ícono.
+command = 'echo '
+shell = ["bash", "-noprofile", "-norc"] # bash es perfecto para un comando tan simple
+format = '[$output  ]($style)'
+style = "bold yellow"
+
+[python]
+# symbol = "🐍"
+symbol = ""
+# format = '[$symbol(\($virtualenv\) )]($style)'
+format = '[$symbol  ]($style)'
+pyenv_version_name = false
+detect_extensions = [] # Asegúrate de que detecte el entorno virtual aunque no haya archivos de python.
+detect_files = ["pyproject.toml", "requirements.txt", "Pipfile", "tox.ini"]
+detect_folders = [".venv"] # Añadimos esto por si acaso
+style = "bold green"
+
+[custom.venv_indicator]
+# description = "Muestra el nombre del entorno virtual de Python"
+command = "echo \"(\"$(basename \"$VIRTUAL_ENV\")\")\""
+when = "test -n \"$VIRTUAL_ENV\""
+shell = ["fish"]
+format = "[$output]($style) "
+style = "bold green" # O el color que prefieras para Python
+
+[directory]
+style = "yellow bold"
+truncation_length = 5
+truncation_symbol = "~/"  # "…/"
+read_only = "◈"
+read_only_style = "red"
+use_os_path_sep = true
+format = '[$path]($style)[$read_only]($read_only_style) '
+
+# Here is how you can shorten some long paths by text replacement
+# similar to mapped_locations in Oh My Posh:
+[directory.substitutions]
+"Documents" = " "
+"Downloads" = " "
+"Music" = " "
+"Pictures" = " "
+# Keep in mind that the order matters. For example:
+# "Important Documents" = "  "
+# will not be replaced, because "Documents" was already substituted before.
+# So either put "Important Documents" before "Documents" or use the substituted version:
+# "Important  " = "  "
+
+[sudo]
+disabled = false
+symbol = "🔒"
+format = "[$symbol]($style)"
+style = "bold red"
+
+[shell]
+disabled = false
+style = "cyan bold" # Puedes ponerle el estilo que quieras
+format = "[$indicator]($style)" # Muestra solo el ícono
+fish_indicator = "🐟"
+bash_indicator = "🐙"
+zsh_indicator = "⚡"
+
+# Módulo personalizado de ícono según shell
+# [custom.shell_icon]
+# when = "true"
+# command = 'echo $STARSHIP_SHELL | sed "s/fish/🐟/; s/bash/🐙/; s/zsh/⚡/"'
+# shell = ["sh"]
+# format = "$output"
+# style = "cyan"
+
+[git_branch]
+symbol = ""
+style = "purple"
+format = "[$symbol$branch]($style) "
+
+[git_status]
+style = "purple"
+format = "[$all_status$ahead_behind]($style) "
+conflicted = "⚔"
+ahead = "⇡${count}"
+behind = "⇣${count}"
+diverged = "⇕"
+untracked = " ?"
+stashed = ""
+modified = "✚"
+staged = "+"
+renamed = "»"
+deleted = "✖"
+
+[cmd_duration]
+min_time = 1_000
+format = "[$duration]($style)"
+style = "bold yellow"
+disabled = false
+
+[time]
+disabled = false
+use_12hr = false
+format = '[$time]($style)'
+time_format = "%H:%M"
+utc_time_offset = "-3"  # <-- Argentina
+style = "bold blue"
+
+[username]
+show_always = true
+style_user = "bold green"
+format = "[$user]($style)"
+
+[hostname]
+disabled = true
+
+[status]
+disabled = true
+symbol = "🔴"
+format = "[$symbol$status]($style)"
+style = "bold red"
+
+[battery]
+disabled = true
+format = "[$symbol$percentage]($style)"
+full_symbol = "🔋"
+charging_symbol = "🔌"
+discharging_symbol = "⚡"
+display = [
+  { threshold = 100, style = "bold green" }
+]
+
+[memory_usage]
+disabled = true
+threshold = -1
+symbol = "🖥️"
+style = "bold blue"
+
+[package]
+symbol = "pkg"
+format = "[$version]($style)"
+disabled = true
+
+[os.symbols]
+Alpine = "alp "
+Amazon = "amz "
+Android = "andr "
+Arch = "rch "
+CentOS = "cent "
+Debian = "deb "
+DragonFly = "dfbsd "
+Emscripten = "emsc "
+EndeavourOS = "ndev "
+Fedora = "fed "
+FreeBSD = "fbsd "
+Garuda = "garu "
+Gentoo = "gent "
+HardenedBSD = "hbsd "
+Illumos = "lum "
+Linux = "lnx "
+Macos = "mac "
+Manjaro = "mjo "
+Mariner = "mrn "
+MidnightBSD = "mid "
+Mint = "mint "
+NetBSD = "nbsd "
+NixOS = "nix "
+OpenBSD = "obsd "
+OpenCloudOS = "ocos "
+openEuler = "oeul "
+openSUSE = "osuse "
+OracleLinux = "orac "
+Pop = "pop "
+Raspbian = "rasp "
+Redhat = "rhl "
+RedHatEnterprise = "rhel "
+Redox = "redox "
+Solus = "sol "
+SUSE = "suse "
+Ubuntu = "ubnt "
+Unknown = "unk "
+Windows = "win "
+
+[nodejs]
+symbol = "nodejs"
+format = "[$symbol]($style)"
+disabled = true
+
+[lua]
+symbol = "lua"
+format = "[$symbol]($style)"
+
+[bun]
+symbol = "bun"
+format = "[$symbol]($style)"
+
+[docker_context]
+symbol = "docker"
+format = "[$symbol]($style)"
+
+[golang]
+symbol = "go"
+format = "[$symbol]($style)"
+
+[perl]
+symbol = "pl"
+format = "[$symbol]($style)"
+
+[php]
+symbol = "php"
+format = "[$symbol]($style)"
+
+[rust]
+symbol = "rs"
+format = "[$symbol]($style)"
+
+[kubernetes]
+symbol = "kubernetes"
+format = "[$symbol]($style)"
+
+[aws]
+symbol = "aws"
+format = "[$symbol]($style)"

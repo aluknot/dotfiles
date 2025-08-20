@@ -1,0 +1,16 @@
+# ===== Ignorar secretos =====
+secrets/
+*.key
+*.pem
+*.env
+*.gpg
+
+# ===== Ignorar configuraciones locales que no quiero compartir =====
+.local/
+private_*
+
+# ===== Ejemplos de apps que no quiero sincronizar entre máquinas =====
+# (comentar o borrar si sí las querés)
+# nvim/session.vim
+# nvim/undo/
+# fish/fish_variables
