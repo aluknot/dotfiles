@@ -17,7 +17,9 @@ set -U fish_user_paths /usr/local/go/bin $fish_user_paths
 
 # Configurar GOPATH
 set -Ux GOPATH $HOME/proyectos/go
-set -Ux PATH $PATH $GOPATH/bin
+
+# Agregar binarios del GOPATH al PATH
+set -U fish_user_paths $GOPATH/bin $fish_user_paths
 
 # ===================================================================
 # 3. (Opcional) Limpieza de los logs de direnv
@@ -42,7 +44,7 @@ if status is-interactive
     alias la="eza -lha --icons"
     alias lt="eza --tree --icons"
     alias bat="batcat"
-        
+
     function tldrf
         tldr --list | fzf --preview "tldr {1}" --preview-window=right:60% | xargs tldr
     end
