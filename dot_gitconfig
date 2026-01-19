@@ -1,0 +1,14 @@
+[user]
+	name = Laureano Miceli
+	email = nv.aluknot@gmail.com
+[core]
+    editor = code --wait  # Usa VS Code como editor de Git
+[init]
+    defaultBranch = main # Usa "main" como nombre de rama por defecto
+[alias]
+    # Atajos útiles
+    co = checkout
+    br = branch
+    ci = commit
+    st = status
+    lg = log --oneline --graph --decorate
