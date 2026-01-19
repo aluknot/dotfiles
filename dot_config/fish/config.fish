@@ -27,6 +27,14 @@ set -U fish_user_paths $GOPATH/bin $fish_user_paths
 # ===================================================================
 set -gx DIRENV_LOG_FORMAT ""
 
+# ===================================================================
+# 4. LIMPIEZA DE HOME (XDG SPEC)
+# Forzar a las apps a guardar su basura en carpetas ordenadas.
+# ===================================================================
+set -gx PYTHON_HISTORY $HOME/.local/state/python/history
+set -gx LESSHISTFILE $HOME/.local/state/less/history
+alias wget="wget --hsts-file=$HOME/.cache/wget-hsts"
+
 if status is-interactive
     # Quitar el mensaje de bienvenida de fish
     set -U fish_greeting
